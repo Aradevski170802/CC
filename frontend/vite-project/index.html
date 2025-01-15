@@ -4,25 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My React App</title>
-  <!-- FullCalendar Styles -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/daygrid/main.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/timegrid/main.min.css" />
-
-  <!-- FullCalendar Scripts (UMD versions) -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/daygrid/main.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/timegrid/main.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/interaction/main.min.js"></script>
-
+  <title>ID Appointment Booking</title>
+  <style>
+    #calendar {
+      max-width: 900px;
+      margin: 50px auto;
+      background-color: #1e1e1e;
+      color: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    }
+  </style>
 </head>
 
 <body>
-  <!-- React will inject the app into this div -->
   <div id="root"></div>
-
-  <!-- This script points to the entry file of your app (main.jsx) -->
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
