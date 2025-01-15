@@ -27,6 +27,12 @@ public class SlotController {
                 .collect(Collectors.toList());
     }
 
+    public List<SlotResource> getAllAvailableSlots() {
+        return slotService.getAllSlots().stream()
+                .filter(slot -> "BOOKED".equals(slot.getStatus().toString())) // Filter only booked slots
+                .map(slotResourceAssembler::toResource) // Convert to SlotResource
+                .collect(Collectors.toList());
+    }
     @GetMapping("/{id}")
     public SlotResource getSlotById(@PathVariable Long id) {
         return slotResourceAssembler.toResource(slotService.getSlotById(id));

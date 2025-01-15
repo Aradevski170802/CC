@@ -9,37 +9,51 @@ import com.booking.book.controller.SlotController;
 @Component
 public class SlotResourceAssembler {
 
-    public SlotResource toResource(Slots slot) {
-        SlotResource resource = new SlotResource();
-        resource.setId(slot.getId());
-        resource.setDate(slot.getDate().toString());
-        resource.setTime(slot.getTime().toString());
-        resource.setRoomNumber(slot.getRoomNumber());
-        resource.setRegistrarName(slot.getRegistrarName());
-        resource.setStatus(slot.getStatus().toString());
+        public SlotResource toResource(Slots slot) {
+                SlotResource resource = new SlotResource();
+                resource.setId(slot.getId());
+                resource.setDate(slot.getDate().toString());
+                resource.setTime(slot.getTime().toString());
+                resource.setRoomNumber(slot.getRoomNumber());
+                resource.setRegistrarName(slot.getRegistrarName());
+                resource.setStatus(slot.getStatus().toString());
 
-        // Add self link
-        resource.add(WebMvcLinkBuilder.linkTo(
-                WebMvcLinkBuilder.methodOn(SlotController.class).getSlotById(slot.getId())
-        ).withSelfRel());
+                // Add self link (absolute URL)
+                resource.add(WebMvcLinkBuilder.linkTo(
+                                WebMvcLinkBuilder.methodOn(SlotController.class).getSlotById(slot.getId()))
+                                .withSelfRel().withHref(WebMvcLinkBuilder.linkTo(
+                                                WebMvcLinkBuilder.methodOn(SlotController.class)
+                                                                .getSlotById(slot.getId()))
+                                                .toUri().toString()));
 
-        // Add book link
-        resource.add(WebMvcLinkBuilder.linkTo(
-                WebMvcLinkBuilder.methodOn(SlotController.class).bookSlot(slot.getId())
-        ).withRel("book"));
+                if (!"BOOKED".equals(slot.getStatus().toString())) {
+                        resource.add(WebMvcLinkBuilder.linkTo(
+                                        WebMvcLinkBuilder.methodOn(SlotController.class).bookSlot(slot.getId()))
+                                        .withRel("book")
+                                        .withHref(WebMvcLinkBuilder.linkTo(
+                                                        WebMvcLinkBuilder.methodOn(SlotController.class)
+                                                                        .bookSlot(slot.getId()))
+                                                        .toUri().toString()));
+                }
+                // Add cancel link (only if the slot is BOOKED)
+                if ("BOOKED".equals(slot.getStatus().toString())) {
+                        resource.add(WebMvcLinkBuilder.linkTo(
+                                        WebMvcLinkBuilder.methodOn(SlotController.class).cancelSlot(slot.getId()))
+                                        .withRel("cancel").withHref(WebMvcLinkBuilder.linkTo(
+                                                        WebMvcLinkBuilder.methodOn(SlotController.class)
+                                                                        .cancelSlot(slot.getId()))
+                                                        .toUri().toString()));
+                }
 
-        // Add cancel link (only if the slot is currently booked)
-        if (slot.getStatus().toString().equals("BOOKED")) {
-            resource.add(WebMvcLinkBuilder.linkTo(
-                    WebMvcLinkBuilder.methodOn(SlotController.class).cancelSlot(slot.getId())
-            ).withRel("cancel"));
+                if ("AVAILABLE".equals(slot.getStatus().toString())) {
+                        resource.add(WebMvcLinkBuilder.linkTo(
+                                        WebMvcLinkBuilder.methodOn(SlotController.class).getAllAvailableSlots())
+                                        .withRel("available").withHref(WebMvcLinkBuilder.linkTo(
+                                                        WebMvcLinkBuilder.methodOn(SlotController.class)
+                                                                        .getAvailableSlots())
+                                                        .toUri().toString()));
+                }
+
+                return resource;
         }
-
-        // Add available slots link
-        resource.add(WebMvcLinkBuilder.linkTo(
-                WebMvcLinkBuilder.methodOn(SlotController.class).getAvailableSlots()
-        ).withRel("available"));
-
-        return resource;
-    }
 }

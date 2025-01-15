@@ -25,7 +25,6 @@ public class Application {
                 .route("slots-route", r -> r.path("/slots/**")
                         .filters(f -> f
                                 .filter(new JwtGatewayFilter()) // Apply JWT filter
-                                .rewritePath("/slots/(?<segment>.*)", "/${segment}") // Optional path rewrite
                                 .filter((exchange, chain) -> {
                                     // Determine the target URI based on request count
                                     int count = requestCounter.incrementAndGet();
