@@ -1,16 +1,15 @@
 body {
-  align-items: center;
-  animation: auroraEffect 10s ease-in-out infinite;
-  background: linear-gradient(135deg, #1e1e1e, #282828, #121212, #404040);
-  background-size: 400% 400%;
-  color: rgb(255, 255, 255);
+  margin: 0;
+  font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
-  font-family: "Roboto", sans-serif;
+  align-items: center;
   justify-content: flex-start;
-  margin: 0;
   min-height: 100vh;
-  overflow-y: auto;
+  background: linear-gradient(135deg, #1e1e1e, #282828, #121212, #404040);
+  background-size: 400% 400%;
+  animation: auroraEffect 10s ease-in-out infinite;
+  color: white;
 }
 
 h1 {
